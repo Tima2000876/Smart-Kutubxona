@@ -1,3 +1,3 @@
-document.getElementById("myButton").addEventListener("click", function() {
-    alert("Ты нажал на кнопку!");
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("Смарт-Кутубхона загружена!");
 });
