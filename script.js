@@ -1,37 +1,27 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let books = JSON.parse(localStorage.getItem("books")) || [];
-
-    // Добавление книги
+document.addEventListener("DOMContentLoaded", function () {
     const bookForm = document.getElementById("bookForm");
-    if (bookForm) {
-        bookForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            let title = document.getElementById("title").value;
-            let author = document.getElementById("author").value;
-            
-            books.push({ title, author });
-            localStorage.setItem("books", JSON.stringify(books));
 
-            alert("Книга добавлена!");
-            bookForm.reset();
-        });
+    if (!bookForm) {
+        console.error("Форма #bookForm не найдена!");
+        return;
     }
 
-    // Поиск книги
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-        window.searchBook = function() {
-            let query = searchInput.value.toLowerCase();
-            let results = books.filter(book => book.title.toLowerCase().includes(query));
+    bookForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Предотвращаем перезагрузку страницы
 
-            let resultsList = document.getElementById("searchResults");
-            resultsList.innerHTML = "";
+        const title = document.getElementById("title").value.trim();
+        const author = document.getElementById("author").value.trim();
 
-            results.forEach(book => {
-                let li = document.createElement("li");
-                li.textContent = ${book.title} - ${book.author};
-                resultsList.appendChild(li);
-            });
-        };
-    }
+        if (title === "" || author === "") {
+            alert("Заполните все поля!");
+            return;
+        }
+
+        let books = JSON.parse(localStorage.getItem("books")) || [];
+        books.push({ title, author });
+        localStorage.setItem("books", JSON.stringify(books));
+
+        alert("Книга добавлена!");
+        bookForm.reset();
+    });
 });
